@@ -1,20 +1,31 @@
-import 'dart:async';
-
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stream_sample/my_repo.dart';
+import 'package:stream_sample/repo/my_repo.dart';
+import 'package:stream_sample/model/animal.dart';
 
-class MyCubit extends Cubit<int> {
+part 'my_state.dart';
 
+class MyCubit extends Cubit<MyState> {
   final MyRepo _repo = MyRepo();
 
-  MyCubit() : super(-1){
+  MyCubit() : super(MyInitial()) {
     _fetchData();
   }
 
   // TODO: use this for simple apps, the stream subscription is anonymous so it's cancelled when the cubit instance is destroyed
   void _fetchData() async {
-    await for (final int data in _repo.fetchData()) {
-      emit(data);
+    await for (final SealedAnimal data in _repo.fetchData()) {
+      switch (data) {
+        case Cat():
+          emit(MyCat(message: data.message));
+
+        case Dog():
+          emit(MyDog(message: data.message, color: data.color));
+
+        case Fish():
+          emit(MyFish(messages: data.messages, behavior: data.behavior));
+      }
     }
   }
 
