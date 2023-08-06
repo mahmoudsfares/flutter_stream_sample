@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stream_sample/controller/my_cubit.dart';
 
+import 'bloc_observer.dart';
+
 void main() {
+  Bloc.observer = const AppBlocObserver();
   runApp(const MyApp());
 }
 
