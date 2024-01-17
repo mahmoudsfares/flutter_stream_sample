@@ -38,31 +38,32 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: BlocBuilder<MyCubit, MyState>(
           builder: (context, state) {
-            if (state is MyCat) {
-              return Text(state.message);
-            } else if (state is MyDog) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(state.message),
-                  const SizedBox(height: 5),
-                  Text(state.color),
-                ],
-              );
-            } else if (state is MyFish) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ...List.generate(
-                    state.messages.length,
-                    (index) => Text(state.messages[index]),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(state.behavior),
-                ],
-              );
-            } else {
-              return const CircularProgressIndicator();
+            switch (state) {
+              case MyCat():
+                return Text(state.message);
+              case MyDog():
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(state.message),
+                    const SizedBox(height: 5),
+                    Text(state.color),
+                  ],
+                );
+              case MyFish():
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ...List.generate(
+                      state.messages.length,
+                      (index) => Text(state.messages[index]),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(state.behavior),
+                  ],
+                );
+              case MyInitial():
+                return const SizedBox();
             }
           },
         ),

@@ -1,7 +1,7 @@
 part of 'my_cubit.dart';
 
 @immutable
-abstract class MyState extends Equatable {
+sealed class MyState extends Equatable {
   const MyState();
 
   @override
